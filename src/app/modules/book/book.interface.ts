@@ -23,7 +23,7 @@ type IBook = {
     | "Self-help"
     | "Thriller"
     | "Travel";
-  publication_date: String;
+  publication_date: string;
   reviews: {
     email: string;
     comment: string;

@@ -7,14 +7,21 @@ const router = Router();
 
 // Create
 router.post(
-  "/create_book",
+  "/",
   validate_request(BookValidation.createBookZodSchema),
   BookController.createBook
 );
 
 // Update
+router.patch(
+  "/:id",
+  validate_request(BookValidation.updateBookZodSchema),
+  BookController.updateBook
+);
 
 // Delete
+
+router.delete("/:id", BookController.deleteBook);
 
 // Read
 

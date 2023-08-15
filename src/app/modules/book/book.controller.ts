@@ -15,4 +15,26 @@ const createBook = catch_async(async (req: Request, res: Response) => {
   });
 });
 
-export const BookController = { createBook };
+const updateBook = catch_async(async (req: Request, res: Response) => {
+  const result = await BookService.updateBook(req.params.id, req.body);
+
+  send_response<IBook>(res, {
+    status_code: 200,
+    success: true,
+    message: "Book updated successfully !",
+    data: result,
+  });
+});
+
+const deleteBook = catch_async(async (req: Request, res: Response) => {
+  const result = await BookService.deleteBook(req.params.id);
+
+  send_response<IBook>(res, {
+    status_code: 200,
+    success: true,
+    message: "Book deleted successfully !",
+    data: result,
+  });
+});
+
+export const BookController = { createBook, updateBook, deleteBook };
