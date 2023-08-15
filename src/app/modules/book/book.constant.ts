@@ -20,4 +20,8 @@ const book_genres = [
   "Travel",
 ];
 
-export { book_genres };
+const books_filterable_fields = ["searchTerm", "publication_date", "genre"];
+
+const books_searchable_fields = ["title", "author"];
+
+export { book_genres, books_filterable_fields, books_searchable_fields };

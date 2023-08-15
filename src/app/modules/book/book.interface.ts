@@ -1,8 +1,6 @@
 import { Model } from "mongoose";
 
-type IBook = {
-  title: string;
-  author: string;
+type IGenre = {
   genre:
     | "Action"
     | "Adventure"
@@ -23,6 +21,12 @@ type IBook = {
     | "Self-help"
     | "Thriller"
     | "Travel";
+};
+
+type IBook = {
+  title: string;
+  author: string;
+  genre: IGenre;
   publication_date: string;
   reviews: {
     email: string;
@@ -32,4 +36,10 @@ type IBook = {
 
 type BookModel = Model<IBook, Record<string, unknown>>;
 
-export { IBook, BookModel };
+type IBookFilterableFields = {
+  searchTerm?: string;
+  genre?: IGenre;
+  publication_date?: string;
+};
+
+export { IBook, BookModel, IBookFilterableFields };
