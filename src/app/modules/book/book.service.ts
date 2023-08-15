@@ -58,6 +58,12 @@ const getBooks = async (
   };
 };
 
+const getBook = async (id: string): Promise<IBook | null> => {
+  const result = await Book.findById(id);
+
+  return result;
+};
+
 const createBook = async (payload: IBook): Promise<IBook> => {
   const result = await Book.create(payload);
 
@@ -81,4 +87,10 @@ const deleteBook = async (id: string): Promise<IBook | null> => {
   return result;
 };
 
-export const BookService = { getBooks, createBook, updateBook, deleteBook };
+export const BookService = {
+  getBooks,
+  getBook,
+  createBook,
+  updateBook,
+  deleteBook,
+};
