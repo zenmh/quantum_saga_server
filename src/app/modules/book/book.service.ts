@@ -3,7 +3,7 @@ import { calculate_pagination } from "../../../helpers/pagination_helpers";
 import { IGenericResponse } from "../../../interfaces/common";
 import { IPaginationOptions } from "../../../interfaces/pagination";
 import { books_searchable_fields } from "./book.constant";
-import { IBook, IBookFilterableFields } from "./book.interface";
+import { IBook, IBookFilterableFields, IBookReview } from "./book.interface";
 import { Book } from "./book.model";
 
 const getBooks = async (
@@ -81,8 +81,100 @@ const updateBook = async (
   return result;
 };
 
-const deleteBook = async (id: string): Promise<IBook | null> => {
+const deleteBook = async (id: string, book: IBook): Promise<IBook | null> => {
   const result = await Book.findByIdAndDelete(id);
+
+  return result;
+};
+
+const addReview = async (id: string, payload: IBookReview) => {
+  const result = await Book.findOneAndUpdate(
+    { _id: id },
+    { $push: { reviews: payload } },
+    { new: true }
+  );
+
+  return result;
+};
+
+const addToWishlist = async (id: string, payload: any) => {
+  const result = await Book.findOneAndUpdate(
+    { _id: id },
+    { wishlist: payload },
+    {
+      new: true,
+    }
+  );
+  return result;
+};
+
+const removeFromWishlist = async (id: string, email: string) => {
+  const result = await Book.findOneAndUpdate(
+    { _id: id },
+    {
+      $pull: {
+        wishlist: email,
+        read_soon: email,
+        currently_reading: email,
+        finished: email,
+      },
+    },
+    {
+      new: true,
+    }
+  );
+
+  return result;
+};
+
+const addToReadSoon = async (id: string, payload: string[]) => {
+  const email: string = payload[payload.length - 1];
+
+  const result = await Book.findOneAndUpdate(
+    { _id: id },
+    {
+      $pull: { currently_reading: email, finished: email },
+      $addToSet: { read_soon: payload },
+    },
+    {
+      new: true,
+    }
+  );
+
+  return result;
+};
+
+const addToCurrentlyReading = async (id: string, payload: string[]) => {
+  const email: string = payload[payload.length - 1];
+
+  const result = await Book.findOneAndUpdate(
+    { _id: id },
+    {
+      $pull: { read_soon: email, finished: email },
+      $addToSet: {
+        currently_reading: payload,
+      },
+    },
+    {
+      new: true,
+    }
+  );
+  return result;
+};
+
+const addToFinished = async (id: string, payload: string[]) => {
+  const email: string = payload[payload.length - 1];
+
+  const result = await Book.findOneAndUpdate(
+    { _id: id },
+    {
+      $pull: { read_soon: email, currently_reading: email },
+      $addToSet: { finished: payload },
+    },
+    {
+      new: true,
+    }
+  );
 
   return result;
 };
@@ -93,4 +185,10 @@ export const BookService = {
   createBook,
   updateBook,
   deleteBook,
+  addReview,
+  addToWishlist,
+  removeFromWishlist,
+  addToReadSoon,
+  addToCurrentlyReading,
+  addToFinished,
 };

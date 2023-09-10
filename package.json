@@ -4,7 +4,9 @@
   "description": "A server for 'Quantum Sage' book website.",
   "main": "src/index.ts",
   "scripts": {
-    "start": "ts-node-dev --respawn --transpile-only src/index.ts"
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "start": "node dist/index.js",
+    "build": "tsc"
   },
   "keywords": [
     "book",

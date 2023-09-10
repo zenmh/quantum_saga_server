@@ -7,6 +7,7 @@ const createBookZodSchema = z.object({
     author: z.string({ required_error: "Authore is required !!" }),
     genre: z.enum([...book_genres] as [string, ...string[]]),
     publication_date: z.string({ required_error: "Date is required !!" }),
+    email: z.string({ required_error: "Email is required !!" }).email(),
     reviews: z.array(
       z.object({
         email: z.string({ required_error: "Email is required !!" }).email(),
@@ -22,6 +23,7 @@ const updateBookZodSchema = z.object({
     author: z.string().optional(),
     genre: z.enum([...book_genres] as [string, ...string[]]).optional(),
     publication_date: z.string().optional(),
+    email: z.string().email().optional(),
     reviews: z
       .array(
         z.object({
@@ -30,7 +32,25 @@ const updateBookZodSchema = z.object({
         })
       )
       .optional(),
+    updated_at: z
+      .string({ required_error: "Updated date is required !!" })
+      .optional(),
+    wishlist: z.array(z.string()).optional(),
+    read_soon: z.array(z.string()).optional(),
+    currently_reading: z.array(z.string()).optional(),
+    finished: z.array(z.string()).optional(),
   }),
 });
 
-export const BookValidation = { createBookZodSchema, updateBookZodSchema };
+const addReviewZodSchema = z.object({
+  body: z.object({
+    email: z.string({ required_error: "Email is required !!" }),
+    comment: z.string({ required_error: "Comment is required !!" }),
+  }),
+});
+
+export const BookValidation = {
+  createBookZodSchema,
+  updateBookZodSchema,
+  addReviewZodSchema,
+};

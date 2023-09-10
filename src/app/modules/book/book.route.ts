@@ -19,6 +19,25 @@ router.patch(
   BookController.updateBook
 );
 
+router.patch(
+  "/review/:id",
+  validate_request(BookValidation.addReviewZodSchema),
+  BookController.addReview
+);
+
+router.patch("/add_to_wishlist/:id", BookController.addToWishlist);
+
+router.patch("/remove_from_wishlist/:id", BookController.removeFromWishlist);
+
+router.patch("/add_to_read_soon/:id", BookController.addToReadSoon);
+
+router.patch(
+  "/add_to_currently_reading/:id",
+  BookController.addToCurrentlyReading
+);
+
+router.patch("/add_to_finished/:id", BookController.addToFinished);
+
 // Delete
 router.delete("/:id", BookController.deleteBook);
 

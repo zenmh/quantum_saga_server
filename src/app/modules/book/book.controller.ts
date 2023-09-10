@@ -57,12 +57,86 @@ const updateBook = catch_async(async (req: Request, res: Response) => {
 });
 
 const deleteBook = catch_async(async (req: Request, res: Response) => {
-  const result = await BookService.deleteBook(req.params.id);
+  const result = await BookService.deleteBook(req.params.id, req.body);
 
   send_response<IBook>(res, {
     status_code: 200,
     success: true,
     message: "Book deleted successfully !",
+    data: result,
+  });
+});
+
+const addReview = catch_async(async (req: Request, res: Response) => {
+  const result = await BookService.addReview(req.params.id, req.body);
+
+  send_response<IBook>(res, {
+    status_code: 200,
+    success: true,
+    message: "Review added successfully !",
+    data: result,
+  });
+});
+
+const addToWishlist = catch_async(async (req: Request, res: Response) => {
+  const result = await BookService.addToWishlist(req.params.id, req.body);
+
+  send_response<IBook>(res, {
+    status_code: 200,
+    success: true,
+    message: "Book added to wishlist !",
+    data: result,
+  });
+});
+
+const removeFromWishlist = catch_async(async (req: Request, res: Response) => {
+  const result = await BookService.removeFromWishlist(
+    req.params.id,
+    req.body.email
+  );
+
+  send_response<IBook>(res, {
+    status_code: 200,
+    success: true,
+    message: "Book added to wishlist !",
+    data: result,
+  });
+});
+
+const addToReadSoon = catch_async(async (req: Request, res: Response) => {
+  const result = await BookService.addToReadSoon(req.params.id, req.body);
+
+  send_response<IBook>(res, {
+    status_code: 200,
+    success: true,
+    message: "Book added to read soon !",
+    data: result,
+  });
+});
+
+const addToCurrentlyReading = catch_async(
+  async (req: Request, res: Response) => {
+    const result = await BookService.addToCurrentlyReading(
+      req.params.id,
+      req.body
+    );
+
+    send_response<IBook>(res, {
+      status_code: 200,
+      success: true,
+      message: "Book added to currently reading !",
+      data: result,
+    });
+  }
+);
+
+const addToFinished = catch_async(async (req: Request, res: Response) => {
+  const result = await BookService.addToFinished(req.params.id, req.body);
+
+  send_response<IBook>(res, {
+    status_code: 200,
+    success: true,
+    message: "Book added to finished !",
     data: result,
   });
 });
@@ -73,4 +147,10 @@ export const BookController = {
   createBook,
   updateBook,
   deleteBook,
+  addReview,
+  addToWishlist,
+  removeFromWishlist,
+  addToReadSoon,
+  addToCurrentlyReading,
+  addToFinished,
 };

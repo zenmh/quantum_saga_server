@@ -21,6 +21,10 @@ const book_schema = new Schema<IBook>(
       type: String,
       required: true,
     },
+    email: {
+      type: String,
+      required: true,
+    },
     reviews: [
       {
         email: {
@@ -33,6 +37,22 @@ const book_schema = new Schema<IBook>(
         },
       },
     ],
+    updated_at: {
+      type: String,
+      required: false,
+    },
+    wishlist: {
+      type: [String],
+    },
+    read_soon: {
+      type: [String],
+    },
+    currently_reading: {
+      type: [String],
+    },
+    finished: {
+      type: [String],
+    },
   },
   {
     timestamps: true,

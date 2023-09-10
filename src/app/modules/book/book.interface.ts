@@ -23,15 +23,23 @@ type IGenre = {
     | "Travel";
 };
 
+type IBookReview = {
+  email: string;
+  comment: string;
+};
+
 type IBook = {
   title: string;
   author: string;
   genre: IGenre;
   publication_date: string;
-  reviews: {
-    email: string;
-    comment: string;
-  }[];
+  email: string;
+  reviews: IBookReview[];
+  updated_at?: string;
+  wishlist?: string[];
+  read_soon?: string[];
+  currently_reading?: string[];
+  finished?: string[];
 };
 
 type BookModel = Model<IBook, Record<string, unknown>>;
@@ -42,4 +50,4 @@ type IBookFilterableFields = {
   publication_date?: string;
 };
 
-export { IBook, BookModel, IBookFilterableFields };
+export { IBook, BookModel, IBookFilterableFields, IBookReview };
